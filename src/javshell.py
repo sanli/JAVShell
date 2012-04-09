@@ -22,9 +22,11 @@ import sys
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import QObject, pyqtSlot
 from PyQt4.QtGui import QApplication, QDialog
-from winutils import JAVApp
+from winutils import JAVApp, CMDServer
 from ui_dialog import Ui_MainDialog
 from ui_about import Ui_About
+
+
 
 class MainDialog(QDialog):
     '''主对话框窗口
@@ -137,6 +139,14 @@ class AboutDialog(QDialog):
 if __name__ == "__main__":
     locale = QtCore.QLocale(QtCore.QLocale.Chinese, QtCore.QLocale.China) 
     QtCore.QLocale.setDefault(locale)
+    
+    server = CMDServer()
+    try:
+        server.start_server()
+    except Exception, msg:
+        print msg
+        exit(0)
+        
     app = QtGui.QApplication(sys.argv)
     main = MainDialog() 
     #main.show()
